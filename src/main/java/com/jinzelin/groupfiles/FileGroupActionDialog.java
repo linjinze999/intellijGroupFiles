@@ -34,10 +34,14 @@ public class FileGroupActionDialog extends DialogWrapper {
         if(this.txtInput != null){
             String groupKey = this.txtInput.getText();
             if(!groupKey.isEmpty()){
-                FileGroupState.getInstance(this.project).getData().put(this.virtualFile.getCanonicalPath(), groupKey);
-                AbstractProjectViewPane currentProjectViewPane = ProjectView.getInstance(project).getCurrentProjectViewPane();
-                if (currentProjectViewPane != null) {
-                    currentProjectViewPane.updateFromRoot(false);
+                if(groupKey.equals(TreeStructureProvider.OtherGroup)){
+                    FileGroupState.getInstance(this.project).getData().remove(this.virtualFile.getCanonicalPath());
+                } else {
+                    FileGroupState.getInstance(this.project).getData().put(this.virtualFile.getCanonicalPath(), groupKey);
+                    AbstractProjectViewPane currentProjectViewPane = ProjectView.getInstance(project).getCurrentProjectViewPane();
+                    if (currentProjectViewPane != null) {
+                        currentProjectViewPane.updateFromRoot(false);
+                    }
                 }
             }
         }
